@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام فحص المباني</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: rtl;
+        }
+        
+        .landing-container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            color: #718096;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 180px;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #3182ce, #2c5282);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #38a169, #2f855a);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .features {
+            margin-top: 40px;
+            text-align: right;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+        
+        .feature i {
+            color: #4299e1;
+            font-size: 1.2rem;
+            width: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .landing-container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <div class="logo">🏗️</div>
+        <h1>نظام فحص المباني</h1>
+        <p>نظام متقدم لفحص المباني وإنشاء التقارير الهندسية الشاملة مع الرسوم البيانية والإحصائيات التفصيلية</p>
+        
+        <div class="buttons">
+            <a href="main/engineer.html" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                إنشاء تقرير جديد
+            </a>
+            <a href="main/index.html" class="btn btn-secondary">
+                <i class="fas fa-chart-bar"></i>
+                عرض لوحة التحكم
+            </a>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-check"></i>
+                <span>فحص شامل لجميع أقسام المبنى</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-chart-pie"></i>
+                <span>رسوم بيانية تفاعلية وإحصائيات متقدمة</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-file-pdf"></i>
+                <span>تصدير تقارير PDF احترافية</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-mobile-alt"></i>
+                <span>متوافق مع جميع الأجهزة</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-redirect if there's saved data
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedData = localStorage.getItem('reportData');
+            if (savedData) {
+                setTimeout(() => {
+                    if (confirm('يوجد تقرير محفوظ مسبقاً. هل تريد المتابعة إلى لوحة التحكم؟')) {
+                        window.location.href = 'main/index.html';
+                    }
+                }, 1000);
+            }
+        });
+        
+        // Debug function to test navigation
+        function testNavigation() {
+            console.log('Current location:', window.location.href);
+            console.log('Hostname:', window.location.hostname);
+            console.log('Protocol:', window.location.protocol);
+            console.log('Available links:');
+            console.log('- Engineer form: main/engineer.html');
+            console.log('- Dashboard: main/index.html');
+        }
+        
+        // Call test function
+        testNavigation();
+    </script>
+</body>
+</html>

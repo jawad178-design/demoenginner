@@ -1,135 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام فحص المباني - صفحة المهندس</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <h1><i class="fas fa-building"></i> نظام فحص المباني</h1>
-                <p>صفحة المهندس - إدخال البيانات</p>
-            </div>
-        </header>
-
-        <!-- Main Form -->
-        <form id="inspectionForm" class="form-container">
-            <!-- Basic Information Section -->
-            <section class="form-section">
-                <h2><i class="fas fa-info-circle"></i> المعلومات الأساسية</h2>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="reportId">رقم التقرير</label>
-                        <input type="text" id="reportId" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="engineerName">اسم المهندس</label>
-                        <input type="text" id="engineerName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="engineerLicense">رقم الترخيص</label>
-                        <input type="text" id="engineerLicense" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="inspectionDate">تاريخ الفحص</label>
-                        <input type="date" id="inspectionDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="propertyLocation">موقع العقار</label>
-                        <input type="text" id="propertyLocation" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="propertyType">نوع العقار</label>
-                        <select id="propertyType" required>
-                            <option value="">اختر نوع العقار</option>
-                            <option value="residential">سكني</option>
-                            <option value="commercial">تجاري</option>
-                            <option value="industrial">صناعي</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Property Photo Upload -->
-                <div class="form-group">
-                    <label for="propertyPhoto">صورة العقار</label>
-                    <div class="file-upload">
-                        <input type="file" id="propertyPhoto" accept="image/*">
-                        <div class="file-upload-display">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>اضغط لرفع صورة العقار</span>
-                        </div>
-                        <img id="propertyPhotoPreview" style="display: none;">
-                    </div>
-                </div>
-            </section>
-
-            <!-- Inspection Sections -->
-            <div id="inspectionSections">
-                <!-- Electricity Section -->
-                <section class="inspection-section">
-                    <h2><i class="fas fa-bolt"></i> الأعمال الكهربائية</h2>
-                    <div id="electricity-items" class="items-container"></div>
-                </section>
-
-                <!-- Walls Section -->
-                <section class="inspection-section">
-                    <h2><i class="fas fa-home"></i> الجدران والهيكل</h2>
-                    <div id="walls-items" class="items-container"></div>
-                </section>
-
-                <!-- Plumbing Section -->
-                <section class="inspection-section">
-                    <h2><i class="fas fa-tint"></i> أعمال السباكة</h2>
-                    <div id="plumbing-items" class="items-container"></div>
-                </section>
-
-                <!-- Safety Section -->
-                <section class="inspection-section">
-                    <h2><i class="fas fa-shield-alt"></i> السلامة والأمان</h2>
-                    <div id="safety-items" class="items-container"></div>
-                </section>
-
-                <!-- HVAC Section -->
-                <section class="inspection-section">
-                    <h2><i class="fas fa-wind"></i> التكييف والتهوية</h2>
-                    <div id="hvac-items" class="items-container"></div>
-                </section>
-
-                <!-- Finishing Section -->
-                <section class="inspection-section">
-                    <h2><i class="fas fa-paint-brush"></i> أعمال التشطيب</h2>
-                    <div id="finishing-items" class="items-container"></div>
-                </section>
-            </div>
-
-            <!-- Form Actions -->
-            <div class="form-actions">
-                <button type="button" id="saveForm" class="btn btn-primary">
-                    <i class="fas fa-save"></i> حفظ التقرير
-                </button>
-                <button type="button" id="viewDashboard" class="btn btn-secondary">
-                    <i class="fas fa-chart-bar"></i> عرض لوحة التحكم
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Modal for Item Photo Upload -->
-    <div id="photoModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>رفع صورة للبند</h3>
-            <input type="file" id="itemPhotoInput" accept="image/*">
-            <button id="uploadItemPhoto" class="btn btn-primary">رفع الصورة</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>

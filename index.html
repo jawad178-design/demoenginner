@@ -1,242 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام فحص المباني - لوحة التحكم</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <header class="dashboard-header">
-            <div class="header-content">
-                <div class="header-info">
-                    <h1><i class="fas fa-chart-bar"></i> لوحة تحكم فحص المباني</h1>
-                    <div class="report-info">
-                        <span id="reportIdDisplay">رقم التقرير: ---</span>
-                        <span id="reportDateDisplay">التاريخ: ---</span>
-                    </div>
-                </div>
-                <div class="header-image">
-                    <img id="propertyImageDisplay" src="" alt="صورة العقار" style="display: none;">
-                </div>
-            </div>
-            <div class="overall-status" id="overallStatus">
-                <div class="status-badge">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>لا توجد بيانات</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- Summary Cards -->
-        <section class="summary-cards">
-            <div class="card overall-score">
-                <div class="card-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="card-content">
-                    <h3>النتيجة الإجمالية</h3>
-                    <div class="score" id="overallScore">--</div>
-                    <div class="score-label">من 100</div>
-                </div>
-            </div>
-
-            <div class="card passed-items">
-                <div class="card-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <div class="card-content">
-                    <h3>البنود المقبولة</h3>
-                    <div class="count" id="passedCount">--</div>
-                    <div class="percentage" id="passedPercentage">--%</div>
-                </div>
-            </div>
-
-            <div class="card partial-items">
-                <div class="card-icon">
-                    <i class="fas fa-exclamation-circle"></i>
-                </div>
-                <div class="card-content">
-                    <h3>البنود المقبولة جزئياً</h3>
-                    <div class="count" id="partialCount">--</div>
-                    <div class="percentage" id="partialPercentage">--%</div>
-                </div>
-            </div>
-
-            <div class="card failed-items">
-                <div class="card-icon">
-                    <i class="fas fa-times-circle"></i>
-                </div>
-                <div class="card-content">
-                    <h3>البنود المرفوضة</h3>
-                    <div class="count" id="failedCount">--</div>
-                    <div class="percentage" id="failedPercentage">--%</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Scores -->
-        <section class="section-scores">
-            <h2><i class="fas fa-list-alt"></i> درجات الأقسام</h2>
-            <div class="sections-grid" id="sectionsGrid">
-                <!-- Section cards will be dynamically generated -->
-            </div>
-        </section>
-
-        <!-- Charts Section -->
-        <section class="charts-section">
-            <h2><i class="fas fa-chart-pie"></i> الإحصائيات والرسوم البيانية</h2>
-            
-            <!-- Charts Grid -->
-            <div class="charts-grid">
-                <!-- Overall Status Pie Chart -->
-                <div class="chart-container">
-                    <div class="chart-header">
-                        <h3><i class="fas fa-chart-pie"></i> توزيع حالة البنود</h3>
-                    </div>
-                    <div class="chart-wrapper">
-                        <canvas id="overallStatusChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Section Scores Bar Chart -->
-                <div class="chart-container">
-                    <div class="chart-header">
-                        <h3><i class="fas fa-chart-bar"></i> درجات الأقسام</h3>
-                    </div>
-                    <div class="chart-wrapper">
-                        <canvas id="sectionScoresChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Progress Radar Chart -->
-                <div class="chart-container">
-                    <div class="chart-header">
-                        <h3><i class="fas fa-chart-area"></i> تحليل الأداء الشامل</h3>
-                    </div>
-                    <div class="chart-wrapper">
-                        <canvas id="performanceRadarChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Section Items Status Chart -->
-                <div class="chart-container">
-                    <div class="chart-header">
-                        <h3><i class="fas fa-chart-line"></i> تفصيل البنود حسب القسم</h3>
-                    </div>
-                    <div class="chart-wrapper">
-                        <canvas id="sectionItemsChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Statistics Summary -->
-            <div class="statistics-summary">
-                <h3><i class="fas fa-calculator"></i> ملخص الإحصائيات</h3>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <i class="fas fa-percentage"></i>
-                        </div>
-                        <div class="stat-content">
-                            <div class="stat-value" id="completionRate">--%</div>
-                            <div class="stat-label">معدل الإكمال</div>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div class="stat-content">
-                            <div class="stat-value" id="bestSection">---</div>
-                            <div class="stat-label">أفضل قسم</div>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="stat-content">
-                            <div class="stat-value" id="worstSection">---</div>
-                            <div class="stat-label">القسم الأضعف</div>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-content">
-                            <div class="stat-value" id="inspectionTime">---</div>
-                            <div class="stat-label">مدة الفحص</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Detailed Report -->
-        <section class="detailed-report">
-            <h2><i class="fas fa-file-alt"></i> التقرير المفصل</h2>
-            <div id="detailedSections">
-                <!-- Detailed sections will be dynamically generated -->
-            </div>
-        </section>
-
-        <!-- Engineer Information -->
-        <section class="engineer-info">
-            <h2><i class="fas fa-user-tie"></i> معلومات المهندس</h2>
-            <div class="info-card">
-                <div class="info-item">
-                    <label>اسم المهندس:</label>
-                    <span id="engineerNameDisplay">---</span>
-                </div>
-                <div class="info-item">
-                    <label>رقم الترخيص:</label>
-                    <span id="engineerLicenseDisplay">---</span>
-                </div>
-                <div class="info-item">
-                    <label>موقع العقار:</label>
-                    <span id="propertyLocationDisplay">---</span>
-                </div>
-                <div class="info-item">
-                    <label>نوع العقار:</label>
-                    <span id="propertyTypeDisplay">---</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Actions -->
-        <div class="dashboard-actions">
-            <button id="generatePDF" class="btn btn-primary">
-                <i class="fas fa-file-pdf"></i> تصدير PDF
-            </button>
-            <button id="editReport" class="btn btn-secondary">
-                <i class="fas fa-edit"></i> تعديل التقرير
-            </button>
-            <button id="newReport" class="btn btn-success">
-                <i class="fas fa-plus"></i> تقرير جديد
-            </button>
-        </div>
-    </div>
-
-    <!-- Image Modal -->
-    <div id="imageModal" class="modal">
-        <div class="modal-content image-modal">
-            <span class="close">&times;</span>
-            <img id="modalImage" src="" alt="صورة مكبرة">
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>

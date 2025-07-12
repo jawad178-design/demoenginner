@@ -1,0 +1,8 @@
+# Netlify redirects file
+# When only main folder is deployed
+/  /index.html  200
+/dashboard  /index.html  200
+/engineer  /engineer.html  200
+/dashboard.html  /index.html  200
+/engineer.html  /engineer.html  200
+/*  /index.html  200
